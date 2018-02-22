@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "Backend for time report system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "time",
+    "report",
+    "work",
+    "times",
+    "logging",
+    "time"
+  ],
+  "author": "Robin Stoltz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
