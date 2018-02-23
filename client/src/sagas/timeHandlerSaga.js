@@ -1,11 +1,12 @@
-import { delay } from 'redux-saga';
-import { put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { addOvertimeHours } from '../actions';
+import { addMonthReport } from '../actions';
+
+import { fetchMonthReport } from '../api/index';
 
 export function* getWorkTimes() {
-  yield delay(800);
-  yield put( addOvertimeHours(14) );
+  const monthReport = yield call( fetchMonthReport, 2018, 3 );
+  yield put( addMonthReport(monthReport) );
 }
 
 export function* watchGetWorkTimes() {

@@ -11,6 +11,9 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
+import { LocaleProvider } from 'antd';
+import 'antd/dist/antd.css';
+
 import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -26,9 +29,11 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <Provider store={ store }>
+  <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <LocaleProvider>
+        <App />
+      </LocaleProvider>
     </BrowserRouter>
   </Provider>
   , document.getElementById('root')

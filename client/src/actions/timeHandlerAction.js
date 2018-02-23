@@ -21,3 +21,31 @@ export function addOvertimeHours( hours ) {
     }
   }
 }
+
+export const ADD_MONTH_REPORT = 'ADD_MONTH_REPORT';
+export function addMonthReport ( monthReport ) {
+  return {
+    type: ADD_MONTH_REPORT,
+    payload: {
+      monthReport,
+    },
+    meta: {
+      thunk: true,
+    }
+  }
+}
+
+export const CHANGE_WORKTIME = 'CHANGE_WORKTIME';
+export function changeWorkTime ( oldDay, time, timeChanged ) {
+  return {
+    type: CHANGE_WORKTIME,
+    payload: {
+      oldDay,
+      time,
+      timeChanged,
+    },
+    meta: {
+      thunk: true,
+    }
+  }
+}

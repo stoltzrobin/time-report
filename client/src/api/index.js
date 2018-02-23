@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const API_URL = "localhost:4000";
+const API_URL = "http://localhost:4000";
 
-export const fetchMonthReport = (month) => {
-  axios.get( `${API_URL}/getMonthReport/${month}`).then( (reponse) => 
-    reponse.data.map()
-);
-}
+export const fetchMonthReport = (year, month) =>
+  axios.get(`${API_URL}/monthReport/${year}/${month}`).then((response) =>
+    response.data
+  );
