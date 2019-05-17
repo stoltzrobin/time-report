@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import { MonthProvider } from "./context/monthContext";
 import { initialMonthState } from "./initialState/monthState";
-import { monthCombinedReducer } from "./reducers/calendar";
+import { monthCombinedReducer } from "./reducers/monthReducers";
 
 ReactDOM.render(
   <MonthProvider

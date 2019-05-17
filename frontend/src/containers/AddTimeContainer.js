@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
 import { Button } from "antd";
 import moment from "moment";
-
-import { addTime } from "../actions";
 
 import AddTime from "../components/AddTime";
 import { SelectDate } from "../components/SelectDate";
@@ -48,13 +45,4 @@ class AddTimeContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => ({
-  addTime: time => dispatch(addTime(time))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddTimeContainer);
+export default AddTimeContainer;

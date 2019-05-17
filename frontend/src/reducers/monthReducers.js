@@ -1,2 +1,3 @@
-import { combinedReducers } from "./combineReducer";
+import { combineReducer } from "./combineReducer";
 
+export const monthCombinedReducer = combineReducer({});
