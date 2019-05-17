@@ -4,19 +4,17 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import calendarApp from "./reducers";
-
-const store = createStore(
-  calendarApp,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import { MonthProvider } from "./context/monthContext";
+import { initialMonthState } from "./initialState/monthState";
+import { monthCombinedReducer } from "./reducers/calendar";
 
 ReactDOM.render(
-  <Provider store={store}>
+  <MonthProvider
+    reducer={monthCombinedReducer}
+    initialState={initialMonthState}
+  >
     <App />
-  </Provider>,
+  </MonthProvider>,
   document.getElementById("root")
 );
 

@@ -1,12 +1,10 @@
 const calendar = (state = [], action) => {
   switch (action.type) {
-    case "ADD_TODO":
+    case "ADD_TIME":
       return [
         ...state,
         {
-          id: action.id,
-          text: action.text,
-          completed: false
+          ...action.payload
         }
       ];
     case "TOGGLE_TODO":
