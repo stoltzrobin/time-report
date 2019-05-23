@@ -10,7 +10,6 @@ import AddTimeContainer from "./containers/AddTimeContainer";
 import { MonthReportContainer } from "./containers/MonthReportContainer";
 
 const { Header, Content, Footer, Sider } = Layout;
-const SubMenu = Menu.SubMenu;
 
 const MenuTitle = styled(Link)`
   color: white;

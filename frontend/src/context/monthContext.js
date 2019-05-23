@@ -11,4 +11,4 @@ export const MonthProvider = ({ reducer, initialState, children }) => {
   );
 };
 
-export const useMonthValue = useContext(MonthContext);
+export const useMonthContext = () => useContext(MonthContext);
