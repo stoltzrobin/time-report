@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import { TimePicker } from "antd";
 
 import { useMonthContext } from "../context/monthContext";
 
-import { ADD_TIME } from "../reducers/monthReducers";
+import {
+  ADD_TIME,
+  ADD_START_TIME,
+  ADD_LUNCH_TIME,
+  ADD_END_TIME
+} from "../reducers/monthReducers";
 import { CHANGE_TIME } from "../reducers/monthReducers";
 
 import { getMonth } from "../utils/calendarUtils";
@@ -29,32 +35,44 @@ export const ReportTable = () => {
   const [state, dispatch] = useMonthContext();
   // console.log("Context", state);
 
-  // const month = getMonth();
   useEffect(
     () => {
-      if (state.addTime && state.addTime.length > 0) {
-        const tempMonth =
-          month.length > 0 &&
-          month.map(day => {
-            const dateObject = state.addTime.find(x =>
-              x.date.isSame(day.currentDate)
-            );
-            return {
-              ...day,
-              startTime: dateObject && dateObject.startTime,
-              lunchTime: dateObject && dateObject.lunchTime,
-              endTime: dateObject && dateObject.endTime
-            };
-          });
-        setMonth(tempMonth);
-      }
+      // Map start times, lunch times and end times to date object
+      const tempMonth =
+        month.length > 0 &&
+        month.map(day => {
+          const startTime = state.startTimes.find(x =>
+            x.date.isSame(day.currentDate)
+          );
+          const lunchTime = state.lunchTimes.find(x =>
+            x.date.isSame(day.currentDate)
+          );
+          const endTime = state.endTimes.find(x =>
+            x.date.isSame(day.currentDate)
+          );
+          if (lunchTime) {
+            console.log(moment.duration(endTime.time.diff(startTime.time)));
+            console.log("Lunch: ", lunchTime);
+          }
+          return {
+            ...day,
+            startTime: startTime && startTime.time,
+            lunchTime: lunchTime && lunchTime.time,
+            endTime: endTime && endTime.time,
+            totalWorkingTime:
+              startTime &&
+              endTime &&
+              moment
+                .duration(endTime.time.diff(startTime.time))
+                .subtract(lunchTime && lunchTime.time)
+          };
+        });
+      setMonth(tempMonth);
     },
-    [state.addTime]
+    [state.startTimes, state.lunchTimes, state.endTimes]
   );
 
-  console.log("state: ", state);
-  // console.log("Month: ", month);
-  console.log("Month: ", month);
+  // console.log("STATE", state);
 
   return (
     <div>
@@ -84,8 +102,8 @@ export const ReportTable = () => {
               value={item.startTime}
               onChange={time =>
                 dispatch({
-                  type: ADD_TIME,
-                  payload: { date: item.currentDate, startTime: time }
+                  type: ADD_START_TIME,
+                  payload: { date: item.currentDate, time }
                 })
               }
               format="HH:mm"
@@ -95,8 +113,8 @@ export const ReportTable = () => {
               value={item.lunchTime}
               onChange={time =>
                 dispatch({
-                  type: ADD_TIME,
-                  payload: { date: item.currentDate, lunchTime: time }
+                  type: ADD_LUNCH_TIME,
+                  payload: { date: item.currentDate, time }
                 })
               }
               format="HH:mm"
@@ -104,15 +122,17 @@ export const ReportTable = () => {
             />
             <TimePickerWrapper
               value={item.endTime}
-              onChange={time =>
+              onChange={time => {
+                console.log("CHANGE TIME");
                 dispatch({
-                  type: ADD_TIME,
-                  payload: { date: item.currentDate, endTime: time }
-                })
-              }
+                  type: ADD_END_TIME,
+                  payload: { date: item.currentDate, time }
+                });
+              }}
               format="HH:mm"
               minuteStep={15}
             />
+            {item.totalWorkingTime && item.totalWorkingTime.asHours()}
           </Row>
         ))}
       </div>
